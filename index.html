@@ -7,206 +7,436 @@
     <meta name="keywords" content="WhatsApp, gerador de links, mensagens pré-definidas, link WhatsApp, QR code WhatsApp">
     <meta name="author" content="Gerador de Links WhatsApp">
     <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Gerador de Links de WhatsApp | Crie Links Personalizados">
+    <meta property="og:description" content="Crie links personalizados com mensagens pré-definidas para facilitar sua comunicação no WhatsApp">
+    <meta property="og:image" content="https://seudominio.com.br/img/og-image.jpg">
+    <meta property="og:url" content="https://seudominio.com.br/gerador-whatsapp">
+    <meta name="theme-color" content="#25D366">
     <title>Gerador de Links de WhatsApp | Crie Links Personalizados</title>
     <link rel="canonical" href="https://seudominio.com.br/gerador-whatsapp">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #25D366;
+            --primary-dark: #128C7E;
+            --primary-light: #DCF8C6;
+            --secondary-color: #075E54;
+            --accent-color: #34B7F1;
+            --warning-color: #FF9800;
+            --warning-dark: #F57C00;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --bg-light: #f5f7fa;
+            --bg-dark: #e4e8eb;
+            --white: #ffffff;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --border-radius: 16px;
+            --border-radius-sm: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-dark) 100%);
             min-height: 100vh;
             padding: 0;
             margin: 0;
             display: flex;
             flex-direction: column;
+            color: var(--text-dark);
+            line-height: 1.6;
         }
+
         .main-container {
             flex: 1;
             padding: 20px;
             width: 100%;
         }
+
         .app-container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            background-color: white;
+            background-color: var(--white);
             padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
         }
+
+        .app-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background-color: var(--primary-light);
+            opacity: 0.3;
+            border-radius: 0 0 0 100%;
+            z-index: 0;
+        }
+
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             position: relative;
+            z-index: 1;
         }
+
         .header h1 {
-            color: #25D366;
+            color: var(--primary-color);
             font-weight: 800;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            display: inline-block;
         }
+
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
         .header p {
-            color: #666;
+            color: var(--text-light);
             font-size: 1.2rem;
             max-width: 80%;
-            margin: 0 auto;
+            margin: 20px auto 0;
         }
+
         .form-label {
             font-weight: 600;
-            color: #444;
+            color: var(--text-dark);
             margin-bottom: 8px;
+            display: block;
         }
+
         .form-text {
-            color: #666;
+            color: var(--text-light);
+            font-size: 0.9rem;
         }
+
+        .btn {
+            border-radius: var(--border-radius-sm);
+            font-weight: 600;
+            padding: 12px 24px;
+            transition: var(--transition);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(100, 100);
+                opacity: 0;
+            }
+        }
+
         .btn-whatsapp {
-            background-color: #25D366;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            background-color: var(--primary-color);
+            color: var(--white);
+            box-shadow: 0 4px 8px rgba(37, 211, 102, 0.3);
         }
+
         .btn-whatsapp:hover {
-            background-color: #128C7E;
-            color: white;
+            background-color: var(--primary-dark);
+            color: var(--white);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(18, 140, 126, 0.3);
+            box-shadow: 0 6px 12px rgba(18, 140, 126, 0.4);
         }
+
         .btn-donate {
-            background-color: #FF9800;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            background-color: var(--warning-color);
+            color: var(--white);
+            box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
             margin-top: 15px;
         }
+
         .btn-donate:hover {
-            background-color: #F57C00;
-            color: white;
+            background-color: var(--warning-dark);
+            color: var(--white);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(245, 124, 0, 0.3);
+            box-shadow: 0 6px 12px rgba(245, 124, 0, 0.4);
         }
+
         #qrcode {
             text-align: center;
             margin-top: 20px;
             padding: 15px;
         }
+
         #qrcode img {
             margin: 0 auto;
-            border: 8px solid white;
+            border: 8px solid var(--white);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
         }
+
+        #qrcode img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
         .result-section {
             margin-top: 30px;
             padding: 25px;
             background-color: #f9f9f9;
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             display: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            position: relative;
+            border-left: 4px solid var(--primary-color);
         }
+
         .result-section h4 {
-            color: #128C7E;
+            color: var(--primary-dark);
             margin-bottom: 20px;
             font-weight: 700;
         }
+
         .iti {
             width: 100%;
         }
+
         .form-control {
             padding: 12px;
-            border-radius: 8px;
+            border-radius: var(--border-radius-sm);
             border: 1px solid #ddd;
+            font-size: 1rem;
+            transition: var(--transition);
         }
+
         .form-control:focus {
-            border-color: #25D366;
+            border-color: var(--primary-color);
             box-shadow: 0 0 0 0.2rem rgba(37, 211, 102, 0.25);
         }
+
         .input-group .btn {
             padding: 0 20px;
         }
+
         .card {
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             overflow: hidden;
             margin-bottom: 20px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
+            transition: var(--transition);
             height: 100%;
+            border: none;
         }
+
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
         }
+
         .card-body {
-            padding: 20px;
+            padding: 25px;
         }
+
         .feature-icon {
-            font-size: 2rem;
-            color: #25D366;
-            margin-bottom: 15px;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            background-color: var(--primary-light);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 20px;
         }
+
         .features-section {
-            margin-top: 40px;
+            margin-top: 60px;
+            position: relative;
+            z-index: 1;
         }
+
+        .features-section h3 {
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .features-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
         .footer {
-            background-color: #128C7E;
-            color: white;
-            padding: 25px 0;
-            margin-top: 40px;
+            background-color: var(--secondary-color);
+            color: var(--white);
+            padding: 40px 0 25px;
+            margin-top: 60px;
             text-align: center;
+            position: relative;
         }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(135deg, transparent 49%, var(--secondary-color) 50%);
+        }
+
         .footer a {
-            color: white;
+            color: var(--white);
             text-decoration: none;
+            transition: var(--transition);
+            position: relative;
         }
-        .footer a:hover {
-            text-decoration: underline;
+
+        .footer a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--white);
+            transition: var(--transition);
         }
+
+        .footer a:hover::after {
+            width: 100%;
+        }
+
         .content-wrapper {
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
             margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
         }
+
         .form-container {
             flex: 1;
             min-width: 300px;
         }
+
         .info-container {
             flex: 1;
             min-width: 300px;
         }
+
         .donation-section {
             display: none;
             margin-top: 20px;
-            padding: 20px;
+            padding: 25px;
             background-color: #fff8e1;
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--warning-color);
+            position: relative;
+            overflow: hidden;
         }
+
+        .donation-section::after {
+            content: '❤';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+            color: var(--warning-color);
+            opacity: 0.1;
+        }
+
         .donation-section h4 {
-            color: #F57C00;
+            color: var(--warning-dark);
             margin-bottom: 20px;
             font-weight: 700;
         }
+
         #donationQrcode {
             text-align: center;
             margin-top: 20px;
             padding: 15px;
         }
+
         #donationQrcode img {
             margin: 0 auto;
-            border: 8px solid white;
+            border: 8px solid var(--white);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
         }
+
+        #donationQrcode img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
         .phone-input-container {
             display: flex;
             align-items: center;
         }
+
         .country-code {
             background-color: #f5f5f5;
             padding: 12px;
@@ -214,63 +444,373 @@
             border: 1px solid #ddd;
             border-right: none;
             font-weight: 600;
-            color: #444;
+            color: var(--text-dark);
         }
+
         #phone {
             border-radius: 0 8px 8px 0;
         }
+
         .how-to-use {
             background-color: #e8f5e9;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+            padding: 25px;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 30px;
+            position: relative;
+            border-left: 4px solid #2e7d32;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
+
         .how-to-use h4 {
             color: #2e7d32;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
+
         .how-to-use ol {
             padding-left: 20px;
         }
+
         .how-to-use li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 5px;
         }
+
+        .how-to-use li::marker {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
         .testimonials {
-            margin-top: 30px;
+            margin-top: 40px;
         }
+
+        .testimonials h4 {
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .testimonials h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
         .testimonial-card {
-            padding: 20px;
+            padding: 25px;
             background-color: #f5f5f5;
-            border-radius: 12px;
+            border-radius: var(--border-radius-sm);
             margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
         }
+
+        .testimonial-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 3rem;
+            color: var(--primary-color);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
         .testimonial-card p {
             font-style: italic;
+            padding-left: 20px;
+            position: relative;
+            z-index: 1;
         }
+
         .testimonial-author {
             font-weight: bold;
             text-align: right;
+            color: var(--secondary-color);
+            margin-top: 10px;
         }
+
         .usage-examples {
-            margin-top: 20px;
+            margin-top: 30px;
         }
+
+        .usage-examples h4 {
+            color: var(--accent-color);
+            margin-bottom: 25px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .usage-examples h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
         .example-card {
             background-color: #e3f2fd;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 20px;
+            border-left: 4px solid #0d47a1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
         }
+
+        .example-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
         .example-card h5 {
             color: #0d47a1;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .example-card h5 i {
+            margin-right: 10px;
+        }
+
+        .example-card p {
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .copy-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--border-radius-sm);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+            animation: fadeInOut 2s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .tooltip-custom {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-custom .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip-custom:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            .header p {
+                max-width: 95%;
+                font-size: 1rem;
+            }
+            .app-container {
+                padding: 20px;
+            }
+            .content-wrapper {
+                gap: 20px;
+            }
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .btn {
+                padding: 10px 20px;
+            }
+            .form-container, .info-container {
+                min-width: 100%;
+            }
+        }
+
+        /* Animações */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.5s ease-in;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Tema escuro */
+        @media (prefers-color-scheme: dark) {
+            body.dark-theme {
+                background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+                color: #f0f0f0;
+            }
+            
+            body.dark-theme .app-container {
+                background-color: #333;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+            
+            body.dark-theme .form-label,
+            body.dark-theme .form-text {
+                color: #f0f0f0;
+            }
+            
+            body.dark-theme .form-control {
+                background-color: #444;
+                border-color: #555;
+                color: #f0f0f0;
+            }
+            
+            body.dark-theme .card {
+                background-color: #444;
+            }
+            
+            body.dark-theme .result-section,
+            body.dark-theme .how-to-use,
+            body.dark-theme .testimonial-card,
+            body.dark-theme .example-card {
+                background-color: #444;
+            }
+            
+            body.dark-theme .country-code {
+                background-color: #555;
+                color: #f0f0f0;
+                border-color: #666;
+            }
+        }
+
+        /* Botão de tema */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
         }
     </style>
 </head>
 <body>
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="copy-notification" id="copyNotification">
+        <i class="fas fa-check-circle me-2"></i>Copiado com sucesso!
+    </div>
+
     <div class="main-container">
-        <div class="app-container">
+        <div class="app-container fade-in">
             <div class="header">
-                <h1>Gerador de Links de WhatsApp</h1>
+                <h1><i class="fab fa-whatsapp me-2"></i>Gerador de Links de WhatsApp</h1>
                 <p>Crie links personalizados com mensagens pré-definidas para facilitar sua comunicação</p>
             </div>
 
@@ -278,27 +818,31 @@
                 <div class="form-container">
                     <form id="whatsappForm" class="mb-4">
                         <div class="mb-4">
-                            <label for="phone" class="form-label">Número de Telefone:</label>
+                            <label for="phone" class="form-label"><i class="fas fa-phone-alt me-2"></i>Número de Telefone:</label>
                             <div class="phone-input-container">
                                 <span id="countryCode" class="country-code">+55</span>
                                 <input type="tel" class="form-control" id="phone" placeholder="(99) 99999-9999" required>
                             </div>
-                            <div class="form-text mt-2">Selecione o país e digite o número sem o código do país.</div>
+                            <div class="form-text mt-2"><i class="fas fa-info-circle me-1"></i>Selecione o país e digite o número sem o código do país.</div>
                         </div>
 
                         <div class="mb-4">
-                            <label for="message" class="form-label">Mensagem Pré-definida:</label>
+                            <label for="message" class="form-label"><i class="fas fa-comment-alt me-2"></i>Mensagem Pré-definida:</label>
                             <textarea class="form-control" id="message" rows="4" placeholder="Olá, gostaria de mais informações!"></textarea>
+                            <div class="form-text mt-2">
+                                <i class="fas fa-lightbulb me-1"></i>Dica: Adicione emojis para tornar sua mensagem mais expressiva!
+                                <span class="emoji-picker" id="emojiPicker">😊</span>
+                            </div>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-whatsapp btn-lg">
+                            <button type="submit" class="btn btn-whatsapp btn-lg pulse-animation">
                                 <i class="fab fa-whatsapp me-2"></i>Gerar Link
                             </button>
                         </div>
                     </form>
                     
-                    <div class="result-section" id="resultSection">
+                    <div class="result-section slide-in-right" id="resultSection">
                         <h4><i class="fas fa-link me-2"></i>Seu Link do WhatsApp:</h4>
                         <div class="input-group mb-4">
                             <input type="text" class="form-control" id="whatsappLink" readonly>
@@ -311,10 +855,13 @@
                             <a href="#" id="openLink" target="_blank" class="btn btn-whatsapp btn-lg">
                                 <i class="fab fa-whatsapp me-2"></i>Abrir no WhatsApp
                             </a>
+                            <a href="#" id="shareLink" class="btn btn-outline-primary btn-lg ms-2">
+                                <i class="fas fa-share-alt me-2"></i>Compartilhar
+                            </a>
                         </div>
                         
                         <div id="qrcode" class="mt-4">
-                            <p class="text-muted mb-3">Escaneie o QR Code para abrir o link</p>
+                            <p class="text-muted mb-3"><i class="fas fa-qrcode me-2"></i>Escaneie o QR Code para abrir o link</p>
                         </div>
                     </div>
                     
@@ -552,11 +1099,10 @@
             const message = document.getElementById('message').value.trim();
             
             // Validar número de telefone
-            if (!phoneInput.isValidNumber()) {
-                alert('Por favor, insira um número de telefone válido.');
+            if (phoneNumber.replace(/\D/g, '').length < 10) {
+                alert('Por favor, insira um número de telefone válido com pelo menos 10 dígitos.');
                 return;
             }
-            
             // Criar o link do WhatsApp
             const encodedMessage = encodeURIComponent(message);
             const whatsappLink = `https://wa.me/${phoneNumber.replace(/\+/g, '')}?text=${encodedMessage}`;
