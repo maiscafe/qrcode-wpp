@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerador de Links de WhatsApp - Crie links personalizados com mensagens pré-definidas para facilitar sua comunicação">
+    <meta name="keywords" content="WhatsApp, gerador de links, mensagens pré-definidas, link WhatsApp, QR code WhatsApp">
+    <meta name="author" content="Gerador de Links WhatsApp">
+    <meta name="robots" content="index, follow">
+    <title>Gerador de Links de WhatsApp | Crie Links Personalizados</title>
+    <link rel="canonical" href="https://seudominio.com.br/gerador-whatsapp">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-container {
+            flex: 1;
+            padding: 20px;
+            width: 100%;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .header h1 {
+            color: #25D366;
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .header p {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+        }
+        .form-text {
+            color: #666;
+        }
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(18, 140, 126, 0.3);
+        }
+        .btn-donate {
+            background-color: #FF9800;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        .btn-donate:hover {
+            background-color: #F57C00;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(245, 124, 0, 0.3);
+        }
+        #qrcode {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+        }
+        #qrcode img {
+            margin: 0 auto;
+            border: 8px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .result-section {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .result-section h4 {
+            color: #128C7E;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .iti {
+            width: 100%;
+        }
+        .form-control {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .form-control:focus {
+            border-color: #25D366;
+            box-shadow: 0 0 0 0.2rem rgba(37, 211, 102, 0.25);
+        }
+        .input-group .btn {
+            padding: 0 20px;
+        }
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .feature-icon {
+            font-size: 2rem;
+            color: #25D366;
+            margin-bottom: 15px;
+        }
+        .features-section {
+            margin-top: 40px;
+        }
+        .footer {
+            background-color: #128C7E;
+            color: white;
+            padding: 25px 0;
+            margin-top: 40px;
+            text-align: center;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .content-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .form-container {
+            flex: 1;
+            min-width: 300px;
+        }
+        .info-container {
+            flex: 1;
+            min-width: 300px;
+        }
+        .donation-section {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff8e1;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .donation-section h4 {
+            color: #F57C00;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        #donationQrcode {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+        }
+        #donationQrcode img {
+            margin: 0 auto;
+            border: 8px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .phone-input-container {
+            display: flex;
+            align-items: center;
+        }
+        .country-code {
+            background-color: #f5f5f5;
+            padding: 12px;
+            border-radius: 8px 0 0 8px;
+            border: 1px solid #ddd;
+            border-right: none;
+            font-weight: 600;
+            color: #444;
+        }
+        #phone {
+            border-radius: 0 8px 8px 0;
+        }
+        .how-to-use {
+            background-color: #e8f5e9;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .how-to-use h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+        .how-to-use ol {
+            padding-left: 20px;
+        }
+        .how-to-use li {
+            margin-bottom: 10px;
+        }
+        .testimonials {
+            margin-top: 30px;
+        }
+        .testimonial-card {
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .testimonial-card p {
+            font-style: italic;
+        }
+        .testimonial-author {
+            font-weight: bold;
+            text-align: right;
+        }
+        .usage-examples {
+            margin-top: 20px;
+        }
+        .example-card {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .example-card h5 {
+            color: #0d47a1;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="app-container">
+            <div class="header">
+                <h1>Gerador de Links de WhatsApp</h1>
+                <p>Crie links personalizados com mensagens pré-definidas para facilitar sua comunicação</p>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="form-container">
+                    <form id="whatsappForm" class="mb-4">
+                        <div class="mb-4">
+                            <label for="phone" class="form-label">Número de Telefone:</label>
+                            <div class="phone-input-container">
+                                <span id="countryCode" class="country-code">+55</span>
+                                <input type="tel" class="form-control" id="phone" placeholder="(99) 99999-9999" required>
+                            </div>
+                            <div class="form-text mt-2">Selecione o país e digite o número sem o código do país.</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="message" class="form-label">Mensagem Pré-definida:</label>
+                            <textarea class="form-control" id="message" rows="4" placeholder="Olá, gostaria de mais informações!"></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-whatsapp btn-lg">
+                                <i class="fab fa-whatsapp me-2"></i>Gerar Link
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="result-section" id="resultSection">
+                        <h4><i class="fas fa-link me-2"></i>Seu Link do WhatsApp:</h4>
+                        <div class="input-group mb-4">
+                            <input type="text" class="form-control" id="whatsappLink" readonly>
+                            <button class="btn btn-outline-success" type="button" id="copyButton">
+                                <i class="fas fa-copy me-1"></i>Copiar
+                            </button>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <a href="#" id="openLink" target="_blank" class="btn btn-whatsapp btn-lg">
+                                <i class="fab fa-whatsapp me-2"></i>Abrir no WhatsApp
+                            </a>
+                        </div>
+                        
+                        <div id="qrcode" class="mt-4">
+                            <p class="text-muted mb-3">Escaneie o QR Code para abrir o link</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 text-center">
+                        <button class="btn btn-donate btn-lg" id="donateButton">
+                            <i class="fas fa-heart me-2"></i>Apoie este Projeto
+                        </button>
+                    </div>
+                    
+                    <div class="donation-section" id="donationSection">
+                        <h4><i class="fas fa-hand-holding-heart me-2"></i>Faça uma Doação</h4>
+                        <p>Se você gostou deste projeto e deseja apoiar seu desenvolvimento, considere fazer uma doação via PIX:</p>
+                        
+                        <div class="input-group mb-4">
+                            <input type="text" class="form-control" id="pixKey" value="ca42d0dc-b992-4ca8-8860-95f05a6aadd5" readonly>
+                            <button class="btn btn-outline-warning" type="button" id="copyPixButton">
+                                <i class="fas fa-copy me-1"></i>Copiar
+                            </button>
+                        </div>
+                        
+                        <div id="donationQrcode" class="mt-4">
+                            <p class="text-muted mb-3">Escaneie o QR Code para fazer a doação</p>
+                            <img src="pix.png" alt="QR Code PIX" style="margin: 0 auto; border: 8px solid white; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-container">
+                    <div class="how-to-use">
+                        <h4><i class="fas fa-info-circle me-2"></i>Como Usar</h4>
+                        <ol>
+                            <li>Digite o número de telefone (com DDD)</li>
+                            <li>Escreva a mensagem que deseja enviar</li>
+                            <li>Clique em "Gerar Link"</li>
+                            <li>Copie o link ou escaneie o QR Code</li>
+                            <li>Compartilhe com quem desejar!</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="usage-examples">
+                        <h4><i class="fas fa-lightbulb me-2"></i>Exemplos de Uso</h4>
+                        
+                        <div class="example-card">
+                            <h5>Para Negócios</h5>
+                            <p>"Olá! Gostaria de saber mais sobre seus produtos/serviços. Poderia me enviar informações?"</p>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h5>Para Atendimento</h5>
+                            <p>"Olá! Preciso de suporte técnico para o produto [nome do produto]. Meu código de cliente é [código]."</p>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h5>Para Eventos</h5>
+                            <p>"Olá! Gostaria de confirmar minha presença no evento [nome do evento] no dia [data]."</p>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonials">
+                        <h4><i class="fas fa-comment-dots me-2"></i>Depoimentos</h4>
+                        
+                        <div class="testimonial-card">
+                            <p>"Essa ferramenta facilitou muito a comunicação com meus clientes. Agora posso criar links personalizados para cada tipo de atendimento!"</p>
+                            <div class="testimonial-author">- Eder S. Sversute</div>
+                        </div>
+                        
+                        <div class="testimonial-card">
+                            <p>"Uso diariamente para minha loja online. Os clientes adoram a praticidade de já iniciar a conversa com uma mensagem específica."</p>
+                            <div class="testimonial-author">- Ulisses L. Azevedo</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <h3 class="text-center mb-4">Por que usar nosso gerador de links?</h3>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <h5 class="card-title">Rápido e Fácil</h5>
+                                <p class="card-text">Crie links personalizados em segundos, sem necessidade de cadastro.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="feature-icon">
+                                    <i class="fas fa-qrcode"></i>
+                                </div>
+                                <h5 class="card-title">QR Code Instantâneo</h5>
+                                <p class="card-text">Compartilhe facilmente seu link através do QR Code gerado automaticamente.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="feature-icon">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <h5 class="card-title">Suporte Internacional</h5>
+                                <p class="card-text">Funciona com números de telefone de qualquer país do mundo.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="feature-icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <h5 class="card-title">Seguro e Privado</h5>
+                                <p class="card-text">Seus dados não são armazenados em nossos servidores, garantindo total privacidade.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="feature-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <h5 class="card-title">Responsivo</h5>
+                                <p class="card-text">Funciona perfeitamente em qualquer dispositivo, do celular ao computador.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="feature-icon">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <h5 class="card-title">Fácil Compartilhamento</h5>
+                                <p class="card-text">Compartilhe seus links em redes sociais, e-mails ou cartões de visita.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="feature-icon">
+                                    <i class="fas fa-language"></i>
+                                </div>
+                                <h5 class="card-title">Suporte a Emojis</h5>
+                                <p class="card-text">Adicione emojis às suas mensagens para torná-las mais expressivas.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="feature-icon">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                </div>
+                                <h5 class="card-title">Sem Limites</h5>
+                                <p class="card-text">Crie quantos links quiser, sem restrições de uso ou funcionalidades.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>© 2023 Gerador de Links de WhatsApp | Todos os direitos reservados</p>
+                    <p>
+                        <a href="#" class="mx-2">Política de Privacidade</a> | 
+                        <a href="#" class="mx-2">Termos de Uso</a> | 
+                        <a href="#" class="mx-2">Contato</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Inicializar o seletor de telefone internacional
+        const phoneInput = window.intlTelInput(document.getElementById('phone'), {
+            initialCountry: "br",
+            preferredCountries: ["br", "us", "pt"],
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+        });
+
+        // Atualizar o código do país quando o país for alterado
+        phoneInput.promise.then(() => {
+            document.getElementById('countryCode').textContent = '+' + phoneInput.getSelectedCountryData().dialCode;
+        });
+
+        phoneInput.promise.then(() => {
+            phoneInput.element.addEventListener('countrychange', function() {
+                document.getElementById('countryCode').textContent = '+' + phoneInput.getSelectedCountryData().dialCode;
+            });
+        });
+
+        // Formatação automática do número de telefone
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                // Formato brasileiro (XX) XXXXX-XXXX
+                if (phoneInput.getSelectedCountryData().iso2 === 'br') {
+                    if (value.length <= 2) {
+                        this.value = value;
+                    } else if (value.length <= 7) {
+                        this.value = `(${value.substring(0, 2)}) ${value.substring(2)}`;
+                    } else if (value.length <= 11) {
+                        this.value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7)}`;
+                    } else {
+                        this.value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7, 11)}`;
+                    }
+                } else {
+                    // Para outros países, deixamos o intlTelInput lidar com a formatação
+                    this.value = value;
+                }
+            }
+        });
+
+        document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obter valores do formulário
+            const phoneNumber = phoneInput.getNumber();
+            const message = document.getElementById('message').value.trim();
+            
+            // Validar número de telefone
+            if (!phoneInput.isValidNumber()) {
+                alert('Por favor, insira um número de telefone válido.');
+                return;
+            }
+            
+            // Criar o link do WhatsApp
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappLink = `https://wa.me/${phoneNumber.replace(/\+/g, '')}?text=${encodedMessage}`;
+            
+            // Exibir o link
+            document.getElementById('whatsappLink').value = whatsappLink;
+            document.getElementById('openLink').href = whatsappLink;
+            document.getElementById('resultSection').style.display = 'block';
+            
+            // Gerar QR Code
+            generateQRCode(whatsappLink);
+            
+            // Scroll para a seção de resultados em dispositivos móveis
+            if (window.innerWidth < 992) {
+                document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        // Função para gerar QR Code
+        function generateQRCode(text) {
+            const qrcodeContainer = document.getElementById('qrcode');
+            // Manter apenas o parágrafo
+            const paragraph = qrcodeContainer.querySelector('p');
+            qrcodeContainer.innerHTML = '';
+            if (paragraph) qrcodeContainer.appendChild(paragraph);
+            
+            const typeNumber = 0;
+            const errorCorrectionLevel = 'L';
+            const qr = qrcode(typeNumber, errorCorrectionLevel);
+            qr.addData(text);
+            qr.make();
+            
+            const qrCodeImg = qr.createImgTag(5);
+            qrcodeContainer.innerHTML += qrCodeImg;
+        }
+        
+        // Função para copiar o link
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const linkInput = document.getElementById('whatsappLink');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999); // Para dispositivos móveis
+            
+            navigator.clipboard.writeText(linkInput.value)
+                .then(() => {
+                    this.innerHTML = '<i class="fas fa-check me-1"></i>Copiado!';
+                    this.classList.remove('btn-outline-success');
+                    this.classList.add('btn-success');
+                    
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-copy me-1"></i>Copiar';
+                        this.classList.remove('btn-success');
+                        this.classList.add('btn-outline-success');
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Erro ao copiar: ', err);
+                    // Fallback para navegadores mais antigos
+                    document.execCommand('copy');
+                    this.innerHTML = '<i class="fas fa-check me-1"></i>Copiado!';
+                    
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-copy me-1"></i>Copiar';
+                    }, 2000);
+                });
+        });
+        
+        // Função para o botão de doação
+        document.getElementById('donateButton').addEventListener('click', function() {
+            const donationSection = document.getElementById('donationSection');
+            if (donationSection.style.display === 'block') {
+                donationSection.style.display = 'none';
+            } else {
+                donationSection.style.display = 'block';
+                
+                // Scroll para a seção de doação
+                donationSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        // Função para copiar a chave PIX
+        document.getElementById('copyPixButton').addEventListener('click', function() {
+            const pixInput = document.getElementById('pixKey');
+            pixInput.select();
+            pixInput.setSelectionRange(0, 99999); // Para dispositivos móveis
+            
+            navigator.clipboard.writeText(pixInput.value)
+                .then(() => {
+                    this.innerHTML = '<i class="fas fa-check me-1"></i>Copiado!';
+                    this.classList.remove('btn-outline-warning');
+                    this.classList.add('btn-warning');
+                    
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-copy me-1"></i>Copiar';
+                        this.classList.remove('btn-warning');
+                        this.classList.add('btn-outline-warning');
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Erro ao copiar: ', err);
+                    // Fallback para navegadores mais antigos
+                    document.execCommand('copy');
+                    this.innerHTML = '<i class="fas fa-check me-1"></i>Copiado!';
+                    
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-copy me-1"></i>Copiar';
+                    }, 2000);
+                });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
